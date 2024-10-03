@@ -63,25 +63,18 @@ namespace GuestbookApp
 
             // Lägg till inlägget i listan
             posts.Add(post);
-            marshal(); // Spara listan till fil
+            Marshal(); // Spara listan till fil
             return true; // Returnera true om inlägget lades till
         }
 
         // Ta bort ett inlägg via index
         public bool DeletePost(int index)
         {
-            // Kontrollera om det finns några inlägg att ta bort
-            if (posts.Count == 0)
-            {
-                WriteLine("Det finns inga inlägg att ta bort.");
-                return false;
-            }
-
             // Kontrollera om indexet är inom giltigt intervall
             if (index >= 0 && index < posts.Count)
             {
                 posts.RemoveAt(index); // Ta bort inlägget
-                marshal(); // Spara uppdaterad lista till fil
+                Marshal(); // Spara listan till fil
                 return true; // Returnera true om inlägget togs bort
             }
             else
@@ -92,7 +85,7 @@ namespace GuestbookApp
         }
 
         // Spara listan med inlägg till fil i JSON-format
-        private void marshal()
+        private void Marshal()
         {
             var jsonString = JsonSerializer.Serialize(posts, new JsonSerializerOptions { WriteIndented = true }); // Serialisera listan till JSON-sträng, som indenteras med WriteIndented 
             File.WriteAllText(filePath, jsonString); // Skriv JSON-strängen till fil
